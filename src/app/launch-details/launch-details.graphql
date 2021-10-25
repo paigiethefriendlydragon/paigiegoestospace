@@ -1,0 +1,7 @@
+query launchDetails(){
+    launch(id: $id) {
+       id
+       mission_name
+       details
+    }
+}
