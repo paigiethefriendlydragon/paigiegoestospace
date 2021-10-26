@@ -8,7 +8,7 @@ import { LaunchDetailsComponent } from './launch-details/launch-details.componen
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCardModule } from '@angular/material/card'
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [

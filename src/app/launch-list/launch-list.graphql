@@ -1,4 +1,4 @@
-query pastLaunchesList($limit:, Int!) {
+query pastLaunchesList($limit: Int!) {
     launchesPast(limit: $limit)
       id
       mission_name
@@ -12,3 +12,4 @@ query pastLaunchesList($limit:, Int!) {
       launch_date_utc {
         }
   }
+  
