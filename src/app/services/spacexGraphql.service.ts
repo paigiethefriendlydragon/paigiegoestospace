@@ -1324,8 +1324,35 @@ export type LaunchDetailsQueryVariables = Exact<{
 }>;
 
 
-export type LaunchDetailsQuery = { __typename?: 'Query', launch?: { __typename?: 'Launch', id?: string | null | undefined, mission_name?: string | null | undefined, details?: string | null | undefined } | null | undefined };
+export type LaunchDetailsQuery = (
+  { __typename?: 'Query' }
+  & { launch: Maybe<(
+    { __typename?: 'Launch' }
+    & Pick<Launch, 'id' | 'mission_name' | 'details'>
+    & { links: Maybe<(
+      { __typename?: 'LaunchLinks' }
+      & Pick<LaunchLinks, 'flickr_images' | 'mission_patch'>
+    )> }
+  )> }
+);
+export type PastLaunchesListQueryVariables = {
+  limit: Scalars['Int']
+};
 
+export type PastLaunchesListQuery = (
+  { __typename?: 'Query' }
+  & { launchesPast: Maybe<Array<Maybe<(
+    { __typename?: 'Launch' }
+    & Pick<Launch, 'id' | 'mission_name' | 'launch_date_utc'>
+    & { links: Maybe<(
+      { __typename?: 'LaunchLinks' }
+      & Pick<LaunchLinks, 'flickr_images' | 'mission_patch_small'>
+    )>, rocket: Maybe<(
+      { __typename?: 'LaunchRocket' }
+      & Pick<LaunchRocket, 'rocket_name'>
+    )> }
+  )>>> }
+);
 export const LaunchDetailsDocument = gql`
     query launchDetails($id: ID!) {
   launch(id: $id) {
@@ -1345,4 +1372,28 @@ export const LaunchDetailsDocument = gql`
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
+  }
+  export const PastLaunchesListDocument = gql`
+    query pastLaunchesList($limit: Int!) {
+  launchesPast(limit: $limit) {
+    id
+    mission_name
+    links {
+      flickr_images
+      mission_patch_small
+    }
+    rocket {
+      rocket_name
+    }
+    launch_date_utc
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class PastLaunchesListGQL extends Apollo.Query<PastLaunchesListQuery, PastLaunchesListQueryVariables> {
+    document = PastLaunchesListDocument;
+    
   }
